@@ -43,13 +43,13 @@ app.use(cors({
 }));
 
 // User Routes
-app.use('/', userRouter);
+app.use('/api/', userRouter);
 // Bike Owner Routes
-app.use('/bikeowner', bikeOwnerRouter);
+app.use('/api/bikeowner', bikeOwnerRouter);
 // Admin Routes
-app.use('/admin', AdminRouter);
+app.use('/api/admin', AdminRouter);
 // Message Routes
-app.use('/messages', MessageRouter); 
+app.use('/api/messages', MessageRouter); 
 
 app.use((err, req, res, next) => {
   console.log("Error in middleware", err);
