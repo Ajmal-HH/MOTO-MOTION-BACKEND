@@ -41,9 +41,13 @@ app.use(session({
 //   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
 //   credentials: true
 // }));
+// const allowedOrigins = [
+//   'https://moto-motion-frontend.vercel.app',
+//   'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'
+// ];
 const allowedOrigins = [
   'https://moto-motion-frontend.vercel.app',
-  'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'
+  // 'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'
 ];
 
 app.use(cors({
