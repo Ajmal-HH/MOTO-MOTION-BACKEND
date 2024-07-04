@@ -42,13 +42,12 @@ app.use(session({
 //   credentials: true
 // }));
 const allowedOrigins = [
-  'https://moto-motion-frontend.vercel.app/',
-  'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app/'
+  'https://moto-motion-frontend.vercel.app',
+  'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin, like mobile apps or curl requests
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
@@ -58,7 +57,7 @@ app.use(cors({
   },
   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
   credentials: true
-}));
+}));;
 
 // User Routes
 app.use('/api/', userRouter);
