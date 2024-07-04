@@ -18,7 +18,7 @@ const is_blocked = async (req, res, next) => {
                 httpOnly: false,
                 expires: new Date(0),
               }); 
-            return res.status(401).send({ message: "Auth failed", success: false });
+            return res.status(401).send({ message: "User is Blocked", success: false });
         } else {
             next();
         }

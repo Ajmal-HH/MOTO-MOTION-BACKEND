@@ -42,6 +42,7 @@ app.use(cors({
   credentials: true
 }));
 
+console.log('check..');
 // User Routes
 app.use('/api/', userRouter);
 // Bike Owner Routes
