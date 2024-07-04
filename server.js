@@ -37,8 +37,7 @@ app.use(session({
 
 // Middleware
 app.use(cors({
-  // origin: 'https://moto-motion-frontend.vercel.app',
-  origin: '*',
+  origin: 'https://moto-motion-frontend.vercel.app',
   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
   credentials: true
 }));
