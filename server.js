@@ -37,7 +37,7 @@ app.use(session({
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://moto-motion-frontend.vercel.app',
   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
   credentials: true
 }));
