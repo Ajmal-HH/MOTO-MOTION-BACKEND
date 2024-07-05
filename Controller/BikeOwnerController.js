@@ -46,7 +46,6 @@ const bikeOwnerSignup = asyncHandler(async (req, res) => {
         }
         const ownerExist = await bikeOwner.findOne({ email })
         if (ownerExist) {
-            console.log('Bike owner is already exist..');
             res.status(400)
                 .json({ message: 'This email is already exist Please Login' })
         } else {
@@ -60,7 +59,6 @@ const bikeOwnerSignup = asyncHandler(async (req, res) => {
             })
             const bikeOwnerDetails = await bikeowner.save()
             if (bikeOwnerDetails) {
-                console.log('bike owner signup success');
                 res.status(200)
                     .json({ status: true })
             } else {
@@ -289,7 +287,7 @@ const ownerEditBike = async (req, res) => {
 }
 
 const logoutOwner = async (req, res) => {
-    req.session = null
+    req.session.ownerId = null
     res.cookie("bikeOwner-jwt", "", {
         httpOnly: false,
         expires: new Date(0),
@@ -319,7 +317,6 @@ const bookingList = async (req, res) => {
 const bikeOwnerDashboard = async (req, res) => {
     try {
         const id = req.session.ownerId;
-        console.log(id, "bikeowner id");
 
         const bookings = await Booking.find({ bikeOwner_id: id });
         const owner = await bikeOwner.findOne({ _id: id });
@@ -364,7 +361,6 @@ const bikeOwnerDashboard = async (req, res) => {
             }
         ]);
 
-        console.log(monthlySales, "monthlySales");
 
         // Initialize the structure to store monthly sales
         const monthlySalesArray = Array.from({ length: 12 }, () => 0);
@@ -378,7 +374,6 @@ const bikeOwnerDashboard = async (req, res) => {
         // Slice to get only the months up to the current month
         const currentYearSalesArray = monthlySalesArray.slice(0, currentMonth);
 
-        console.log(currentYearSalesArray, "currentYearSalesArray");
 
         res.json({ totalBookings, totolBikes, owner, totalRevenue, monthlySales: currentYearSalesArray });
     } catch (error) {

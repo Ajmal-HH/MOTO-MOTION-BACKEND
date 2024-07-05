@@ -49,7 +49,6 @@ const verifyUser = asyncHandler(async (req, res) => {
 
         const userExist = await User.findOne({ email })
         if (userExist) {
-            console.log('user is already exist');
             res.status(400).json({message:'User is already exists..'})
         }else{
             req.session.userData = req.body
@@ -87,7 +86,6 @@ const verifyOTP = asyncHandler(async(req,res)=>{
         })
         const userDetails =  await user.save()
         if(userDetails){
-            console.log('signUp success');
             res.status(200)
             .json({status : true})
         }else{
@@ -131,7 +129,7 @@ const verifyLogin = asyncHandler(async(req,res)=>{
                     // Set the token and user ID in the authentication context
                     req.authUser = { token, userId: userData._id };
                     res.cookie('jwt', token, {
-                        httpOnly: false,
+                        httpOnly: true,
                         secure: false,
                     });
                      return res.status(200)
@@ -232,7 +230,10 @@ const editUser = async(req, res) =>{
 }
 
 const logoutUser = asyncHandler(async (req, res) => {
-    req.session = null
+    req.session.userData = null
+    req.session.otp = null
+    req.session.userId = null
+    req.session.forgUserId = null
     res.cookie("jwt", "", {   
       httpOnly: false,
       expires: new Date(0),

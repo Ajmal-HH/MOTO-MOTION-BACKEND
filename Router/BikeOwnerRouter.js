@@ -7,28 +7,6 @@ const bikeowner_router = express.Router()
 
 bikeowner_router.use(express.static('public'))
 
-// //multer......
-
-// const productStorage = multer.diskStorage({ 
-//     destination: (req,file,callback)=>{
-//         callback(null,'public/admin-assets/uploads/')
-//     },
-
-//     //extention
-//     filename: (req,file,callback)=>{
-//         callback(null,Date.now()+file.originalname)
-
-//     }
-// })
-
-// //upload parameters for multer
-// const uploadprdt = multer({
-//     storage : productStorage,
-//     // limits : {
-//     //     fileSize : 1024*1024*5
-//     // }
-// })
-
 
 bikeowner_router.post('/bikeowner-signup',bikeOwnerSignup)
 bikeowner_router.post('/bikeowner-login',bikeOwnerLogin)

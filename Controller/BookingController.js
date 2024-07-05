@@ -130,7 +130,6 @@ const bookingAction = async (req, res) => {
     try {
         const bookingId = req.query.bookingId
         const action = req.query.action
-        console.log(action,"action");
         const bookings = await Booking.findByIdAndUpdate(bookingId, {
             $set: {
                 booking_status : action   

@@ -51,12 +51,10 @@ const adminAuth = asyncHandler(async (req, res) => {
                     .json({ message: 'Invalid email or password' })
             }
         } else {
-            console.log('you are not admin');
             res.status(400)
                 .json({ message: 'You are not Admin' })
         }
     } else {
-        console.log('you are not admin');
         res.status(400)
             .json({ message: 'You are not Admin' })
     }
@@ -346,7 +344,6 @@ const adminDashboard = async (req, res) => {
             return monthData ? monthData.count : 0;
         });
 
-        console.log(monthlySalesArray);
 
         //user growth..
         const usersGrowth = await User.aggregate([
@@ -408,7 +405,6 @@ const adminDashboard = async (req, res) => {
             return monthData ? monthData.count : 0;
         });
 
-        console.log(partnersGrowthArray,"partnersGrowthArray...");
 
 
         res.json({ bookings, customers, bikeOwners, bikes, totalRevenue, monthlySalesArray, usersGrowthArray,partnersGrowthArray })
