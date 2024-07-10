@@ -39,16 +39,18 @@ app.use(cors({
   origin: [
     'https://moto-motion-frontend.vercel.app',
     'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app',
-    'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app' // Added this
+    'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app'
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 
@@ -56,10 +58,11 @@ app.options('*', cors({
   origin: [
     'https://moto-motion-frontend.vercel.app',
     'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app',
-    'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app' // Added this
+    'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app'
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 // User Routes
@@ -69,7 +72,7 @@ app.use('/api/bikeowner', bikeOwnerRouter);
 // Admin Routes
 app.use('/api/admin', AdminRouter);
 // Message Routes
-app.use('/api/messages', MessageRouter); 
+app.use('/api/messages', MessageRouter);
 
 app.use((err, req, res, next) => {
   console.log("Error in middleware", err);
