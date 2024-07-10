@@ -41,6 +41,12 @@ app.use(cors({
     'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'],
 }));
 
+app.use((req, res, next)=>{
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  next()
+})
+
 
 
 // User Routes
