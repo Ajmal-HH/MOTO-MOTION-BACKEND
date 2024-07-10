@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
 import userRouter from './Router/UserRouter.js';
 import bikeOwnerRouter from './Router/BikeOwnerRouter.js';
@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
-import { app, server } from './socket';  
+import { app, server } from './socket/socket.js';  
 import sessionSecret from './config/config.js';
 
 
@@ -53,7 +53,11 @@ app.use('/api/admin', AdminRouter);
 app.use('/api/messages', MessageRouter);
 
 app.use((err, req, res, next) => {
-  console.log("Error in middleware", err);
+  console.error("Error in middleware", {
+    message : err.message,
+    stack : err.stack,
+  });
+  res.static(500),json({message : 'internal server error'})
 });
 
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
