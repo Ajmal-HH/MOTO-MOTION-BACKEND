@@ -35,19 +35,32 @@ app.use(session({
   resave: false
 }));
 
-Middleware
 app.use(cors({
-  origin: [  'https://moto-motion-frontend.vercel.app',
-    'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'],
+  origin: [
+    'https://moto-motion-frontend.vercel.app',
+    'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app',
+    'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app' // Added this
+  ],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use((req, res, next)=>{
-  res.header("Access-Control-Allow-Origin", "*")
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-  next()
-})
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
-
+app.options('*', cors({
+  origin: [
+    'https://moto-motion-frontend.vercel.app',
+    'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app',
+    'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app' // Added this
+  ],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // User Routes
 app.use('/api/', userRouter);
