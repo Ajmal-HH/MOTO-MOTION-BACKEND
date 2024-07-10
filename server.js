@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 import { app, server } from './socket/socket.js'; 
 import sessionSecret from './config/config.js';
+import Middleware from './middleware'
 
 dotenv.config();
 
@@ -20,13 +21,14 @@ connectDB();
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
-  maxAge: 24 * 60 * 60 * 1000
+  maxAge: '30d'
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
+app.use(Middleware);
 
 // Session Middleware
 app.use(session({
@@ -35,7 +37,7 @@ app.use(session({
   resave: false,
   cookie: {
     secure: true, // Set to true if using HTTPS
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
+    maxAge: '30d'
   }
 }));
 
