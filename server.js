@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
-import { app, server } from './socket/socket.js';  // Importing from socket.js
+import { app, server } from './socket/socket.js'; 
 import sessionSecret from './config/config.js';
 
 dotenv.config();
@@ -34,7 +34,7 @@ app.use(session({
   saveUninitialized: false,  // Only save session when it is actually modified
   resave: false,
   cookie: {
-    secure: false, // Set to true if using HTTPS
+    secure: true, // Set to true if using HTTPS
     maxAge: 24 * 60 * 60 * 1000 // 1 day
   }
 }));
