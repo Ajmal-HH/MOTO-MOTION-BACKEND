@@ -9,12 +9,9 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
-import { app, server } from './socket/socket.js';  // Importing from socket.js
+import { app, server } from './socket';  
 import sessionSecret from './config/config.js';
 
-// Import middleware
-import { is_blocked, userAuth } from './middleware/userAuth.js';
-import protectedRoute from './middleware/protectedRoute.js';
 
 dotenv.config();
 

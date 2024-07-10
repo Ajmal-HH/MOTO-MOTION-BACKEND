@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
-import { log } from "console";
 
 const app = express();
 
@@ -10,7 +9,7 @@ let users = [];
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {  
-    origin: ["https://moto-motion-frontend.vercel.app"],
+    origin: ["https://moto-motion-frontend.vercel.app","https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
