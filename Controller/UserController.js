@@ -123,6 +123,7 @@ const verifyLogin = asyncHandler(async(req,res)=>{
 
         const userData = await User.findOne({email})
         req.session.userId = userData._id
+        console.log('userId>>>',req.session.userId)
         if(userData){
             const passwordMatch = await bcrypt.compare(password,userData.password)
             if(passwordMatch){
