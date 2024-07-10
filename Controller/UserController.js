@@ -52,7 +52,6 @@ const verifyUser = asyncHandler(async (req, res) => {
             res.status(400).json({message:'User is already exists..'})
         }else{
             req.session.userData = req.body
-            console.log('Session data set:', req.session.userData);
             sendMail(email,req)
             res.status(200)
             .json({status:true})      
@@ -74,7 +73,6 @@ const verifyOTP = asyncHandler(async(req,res)=>{
     const enteredOTP = req.body.otp
     const sessionOTP = req.session.otp
     const otp = parseInt(enteredOTP)
-    console.log(sessionOTP,"sessionOTP")
   
     if(otp===sessionOTP){
         const userData = req.session.userData
@@ -123,7 +121,6 @@ const verifyLogin = asyncHandler(async(req,res)=>{
 
         const userData = await User.findOne({email})
         req.session.userId = userData._id
-        console.log('userId>>>',req.session.userId)
         if(userData){
             const passwordMatch = await bcrypt.compare(password,userData.password)
             if(passwordMatch){
@@ -132,10 +129,9 @@ const verifyLogin = asyncHandler(async(req,res)=>{
                     // Set the token and user ID in the authentication context
                     req.authUser = { token, userId: userData._id };
                     res.cookie('jwt', token, {
-                        httpOnly: true,
-                        secure: true,
+                        httpOnly: false,
+                        secure: false,
                     });
-                    console.log('Logged In successfully');
                      return res.status(200)
                       .json({status : true})
                 }else{
