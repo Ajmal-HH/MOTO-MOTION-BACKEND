@@ -132,6 +132,7 @@ const verifyLogin = asyncHandler(async(req,res)=>{
                         httpOnly: false,
                         secure: false,
                     });
+                    console.log('Logged In successfully');
                      return res.status(200)
                       .json({status : true})
                 }else{
