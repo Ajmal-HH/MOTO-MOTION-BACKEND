@@ -132,8 +132,8 @@ const verifyLogin = asyncHandler(async(req,res)=>{
                     // Set the token and user ID in the authentication context
                     req.authUser = { token, userId: userData._id };
                     res.cookie('jwt', token, {
-                        httpOnly: false,
-                        secure: false,
+                        httpOnly: true,
+                        secure: true,
                     });
                     console.log('Logged In successfully');
                      return res.status(200)
