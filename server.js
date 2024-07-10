@@ -9,9 +9,8 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
-// import { app, server } from './socket/socket.js';  
+import { app, server } from './socket/socket.js';  
 import sessionSecret from './config/config.js';
-const {app, server} = require('./socket/socket.js')
 
 
 
