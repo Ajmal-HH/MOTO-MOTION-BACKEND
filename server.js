@@ -31,8 +31,12 @@ app.use(express.static('public'));
 // Session Middleware
 app.use(session({
   secret: sessionSecret,
-  saveUninitialized: true,
-  resave: false
+  saveUninitialized: false,  // Only save session when it is actually modified
+  resave: false,
+  cookie: {
+    secure: false, // Set to true if using HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+  }
 }));
 
 app.use(cors({
