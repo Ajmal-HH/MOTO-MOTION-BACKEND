@@ -73,6 +73,7 @@ const verifyOTP = asyncHandler(async(req,res)=>{
     const enteredOTP = req.body.otp
     const sessionOTP = req.session.otp
     const otp = parseInt(enteredOTP)
+    console.log(sessionOTP,"sessionOTP")
   
     if(otp===sessionOTP){
         const userData = req.session.userData
