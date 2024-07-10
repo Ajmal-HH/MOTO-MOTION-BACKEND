@@ -11,7 +11,7 @@ import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 import { app, server } from './socket/socket.js'; 
 import sessionSecret from './config/config.js';
-import Middleware from './middleware'
+
 
 dotenv.config();
 
@@ -28,7 +28,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
-app.use(Middleware);
 
 // Session Middleware
 app.use(session({
@@ -47,8 +46,6 @@ app.use(cors({
     'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app',
     'https://moto-motion-frontend-e1jgg7lhs-mohamed-ajmals-projects.vercel.app'
   ],
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
