@@ -79,7 +79,7 @@ const io = new Server(server, {
 
 
 
-  module.exports = { app, io, server };
+  export { app, io, server };
 
 
 
