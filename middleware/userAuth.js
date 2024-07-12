@@ -21,6 +21,7 @@ const is_blocked = async (req, res, next) => {
             }
             return res.status(401).send({ message: "User is Blocked", success: false });
         } else {
+            console.log('hello');
             next();
         }
     } catch (error) {
