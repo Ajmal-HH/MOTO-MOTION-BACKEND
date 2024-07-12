@@ -33,23 +33,34 @@ const is_blocked = async (req, res, next) => {
 
 const userAuth = (req, res, next) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-        console.log(token,"middleware");
+        const authorizationHeader = req.headers.authorization;
+        if (!authorizationHeader) {
+            console.log("No authorization header present");
+            return res.status(401).send({ message: "Auth failed: No authorization header", success: false });
+        }
+
+        const token = authorizationHeader.split(' ')[1];
+        console.log("Token received:", token);
+
         if (!token || tokenBlacklist.has(token)) {
-            return res.status(401).send({ message: "Auth failed", success: false });
+            console.log("Token is missing or blacklisted");
+            return res.status(401).send({ message: "Auth failed: Token is missing or blacklisted", success: false });
         }
 
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
-                return res.status(401).send({ message: "Auth failed", success: false });
+                console.log("JWT verification error:", err.message);
+                return res.status(401).send({ message: "Auth failed: JWT verification error", success: false });
             }
             req.userId = decoded.userId;
+            console.log("Token decoded successfully:", decoded);
             next();
         });
     } catch (error) {
-        console.log(error.message);
-        return res.status(401).send({ message: "Auth failed", success: false });
+        console.log("Error in userAuth middleware:", error.message);
+        return res.status(401).send({ message: "Auth failed: Internal server error", success: false });
     }
 };
+
 
 export { is_blocked , userAuth };
