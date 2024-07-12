@@ -101,10 +101,67 @@ const verifyOTP = asyncHandler(async(req,res)=>{
 })
 
 
-const verifyLogin = asyncHandler(async(req,res)=>{
+// const verifyLogin = asyncHandler(async(req,res)=>{
+//     try {
+//         const {email,password} = req.body
+//         const errorMessages = {};
+//         if (email.trim() === '') {
+//             errorMessages.email = 'Empty email field';
+//         } else if (!/^[a-zA-Z0-9._-]+@gmail\.com$/.test(email)) {
+//             errorMessages.email = 'Please enter a valid gmail address (e.g., example@gmail.com).';
+//         }
+
+//         if (password.trim() === '') {
+//             errorMessages.password = 'Empty password field';
+//         } 
+
+//         if (Object.keys(errorMessages).length > 0) {
+//             return res.status(400).json({ messages: errorMessages });
+//         }
+
+//         const userData = await User.findOne({email})
+//         req.session.userId = userData._id
+//         console.log(req.session.userId ,"userId from session>>>");
+//         if(userData){
+//             const passwordMatch = await bcrypt.compare(password,userData.password)
+//             if(passwordMatch){
+//                 if(!userData?.isBlocked ){
+//                     const token = generateToken(userData._id);
+//                     console.log(token,"token>>>");
+//                     // Set the token and user ID in the authentication context
+//                     req.authUser = { token, userId: userData._id };
+//                     res.cookie('jwt', token, {
+//                         httpOnly: false,
+//                         secure: false,
+//                         sameSite: 'Lax',
+//                     });
+//                      return res.status(200)
+//                       .json({status : true})
+//                 }else{
+//                     res.status(403)
+//                     .json({message : 'User is blocked by admin'})
+//                 }
+//             }else{
+//                 res.status(401)
+//                 .json({message : 'Incorrect password'})
+//             }
+//         }else{
+//             res.status(401)
+//             .json({message : 'Unauthorized user please signUp'})
+//         }
+    
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+
+    
+// })
+
+const verifyLogin = asyncHandler(async (req, res) => {
     try {
-        const {email,password} = req.body
+        const { email, password } = req.body;
         const errorMessages = {};
+
         if (email.trim() === '') {
             errorMessages.email = 'Empty email field';
         } else if (!/^[a-zA-Z0-9._-]+@gmail\.com$/.test(email)) {
@@ -119,43 +176,35 @@ const verifyLogin = asyncHandler(async(req,res)=>{
             return res.status(400).json({ messages: errorMessages });
         }
 
-        const userData = await User.findOne({email})
-        req.session.userId = userData._id
-        console.log(req.session.userId ,"userId from session>>>");
-        if(userData){
-            const passwordMatch = await bcrypt.compare(password,userData.password)
-            if(passwordMatch){
-                if(!userData?.isBlocked ){
-                    const token = generateToken(userData._id);
-                    console.log(token,"token>>>");
-                    // Set the token and user ID in the authentication context
-                    req.authUser = { token, userId: userData._id };
-                    res.cookie('jwt', token, {
-                        httpOnly: false,
-                        secure: false,
-                        sameSite: 'Lax',
-                    });
-                     return res.status(200)
-                      .json({status : true})
-                }else{
-                    res.status(403)
-                    .json({message : 'User is blocked by admin'})
-                }
-            }else{
-                res.status(401)
-                .json({message : 'Incorrect password'})
-            }
-        }else{
-            res.status(401)
-            .json({message : 'Unauthorized user please signUp'})
+        const userData = await User.findOne({ email });
+
+        if (!userData) {
+            return res.status(401).json({ message: 'Unauthorized user please signUp' });
         }
-    
+
+        req.session.userId = userData._id;
+        console.log(req.session.userId, "userId from session>>>");
+
+        const passwordMatch = await bcrypt.compare(password, userData.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Incorrect password' });
+        }
+
+        if (userData?.isBlocked) {
+            return res.status(403).json({ message: 'User is blocked by admin' });
+        }
+
+        const token = generateToken(userData._id);
+        console.log(token, "token>>>");
+
+        return res.status(200).json({ status: true, token });
+
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({ message: 'Internal server error' });
     }
+});
 
-    
-})
 
 const loadHomePage = async (req,res) =>{
     try {
