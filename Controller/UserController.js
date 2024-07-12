@@ -196,6 +196,7 @@ const verifyLogin = asyncHandler(async (req, res) => {
         }
 
         req.session.userId = userData._id;
+        
         console.log(req.session.userId,'req.session.userId>>>> user Login');
 
 
