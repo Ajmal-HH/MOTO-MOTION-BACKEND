@@ -286,11 +286,13 @@ const logoutUser = asyncHandler(async (req, res) => {
     req.session.otp = null
     req.session.userId = null
     req.session.forgUserId = null
-    res.cookie("jwt", "", {   
-      httpOnly: false,
-      expires: new Date(0),
-    });    
-    res.status(200).json({ message: "User logged out" });
+    const token = req.headers.authorization.split(' ')[1];
+    if (token) {
+        tokenBlacklist.add(token);
+        res.status(200).json({ message: 'User logged out successfully' });
+    } else {
+        res.status(400).json({ message: 'No token provided' });
+    }
   });   
 
 
