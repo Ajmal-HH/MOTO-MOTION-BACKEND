@@ -14,10 +14,6 @@ import sessionSecret from './config/config.js';
 
 
 
-console.log(app,"app>>>>");
-console.log(server,"app>>>>");
-
-
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;

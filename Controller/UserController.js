@@ -133,6 +133,7 @@ const verifyLogin = asyncHandler(async(req,res)=>{
                     res.cookie('jwt', token, {
                         httpOnly: false,
                         secure: false,
+                        sameSite: 'Lax',
                     });
                      return res.status(200)
                       .json({status : true})
