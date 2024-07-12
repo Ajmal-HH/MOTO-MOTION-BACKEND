@@ -8,6 +8,7 @@ dotenv.config();
 const is_blocked = async (req, res, next) => {
     try {
         const id = req.session.userId;
+        console.log(id,"id>> in middleware");
         if (!id) {
             return res.redirect('/');
         }
