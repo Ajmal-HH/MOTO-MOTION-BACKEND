@@ -185,7 +185,6 @@ const verifyLogin = asyncHandler(async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized user please signUp' });
         }
 
-        req.session.userId = userData._id;
 
         const passwordMatch = await bcrypt.compare(password, userData.password);
         if (!passwordMatch) {
@@ -195,6 +194,10 @@ const verifyLogin = asyncHandler(async (req, res) => {
         if (userData?.isBlocked) {
             return res.status(403).json({ message: 'User is blocked by admin' });
         }
+
+        req.session.userId = userData._id;
+        console.log(req.session.userId,'req.session.userId>>>> user Login');
+
 
         const token = generateToken(userData._id);
 
