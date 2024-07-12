@@ -186,7 +186,6 @@ const verifyLogin = asyncHandler(async (req, res) => {
         }
 
         req.session.userId = userData._id;
-        console.log(req.session.userId, "userId from session>>>");
 
         const passwordMatch = await bcrypt.compare(password, userData.password);
         if (!passwordMatch) {
@@ -198,7 +197,6 @@ const verifyLogin = asyncHandler(async (req, res) => {
         }
 
         const token = generateToken(userData._id);
-        console.log(token, "token>>>");
 
         return res.status(200).json({ status: true, token });
 
@@ -236,7 +234,9 @@ const bikeDetails = asyncHandler(async(req,res)=>{
 
 const userProfile = async(req,res) =>{
     const userId = req.session.userId
+    console.log(userId,"userId");
     const user = await User.findOne({_id : userId})
+    console.log(user,"userData");
     res.status(200).json(user)
 }
 
