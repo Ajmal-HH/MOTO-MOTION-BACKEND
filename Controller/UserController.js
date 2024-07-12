@@ -126,6 +126,7 @@ const verifyLogin = asyncHandler(async(req,res)=>{
             if(passwordMatch){
                 if(!userData?.isBlocked ){
                     const token = generateToken(userData._id);
+                    console.log(token,"token>>>");
                     // Set the token and user ID in the authentication context
                     req.authUser = { token, userId: userData._id };
                     res.cookie('jwt', token, {
