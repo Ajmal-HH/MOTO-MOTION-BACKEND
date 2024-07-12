@@ -8,7 +8,7 @@ import Booking from '../model/bookingModel.js'
 import jwt from 'jsonwebtoken'
 import Bike from '../model/bikeModel.js'
 
-const tokenBlacklist = new Set();
+export const tokenBlacklist = new Set();
 
 
 

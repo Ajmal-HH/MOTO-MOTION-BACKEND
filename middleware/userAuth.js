@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../model/userModel.js';
+import { tokenBlacklist } from '../Controller/UserController.js';
 
 dotenv.config();
 
@@ -14,24 +15,26 @@ const is_blocked = async (req, res, next) => {
         const findUser = await User.findById(id);
         if (findUser && findUser.isBlocked) {
             req.session = null;
-            res.cookie("jwt", "", {   
-                httpOnly: false,
-                expires: new Date(0),
-              }); 
+            const token = req.headers.authorization?.split(' ')[1];
+            if (token) {
+                tokenBlacklist.add(token);
+            }
             return res.status(401).send({ message: "User is Blocked", success: false });
         } else {
             next();
         }
     } catch (error) {
-        console.log("Error =>",error.message);
+        console.log("Error =>", error.message);
         return res.status(401).send({ message: "Auth failed", success: false });
     }
 };
 
+
+
 const userAuth = (req, res, next) => {
     try {
-        const token = req.cookies.jwt;
-        if (!token) {
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token || tokenBlacklist.has(token)) {
             return res.status(401).send({ message: "Auth failed", success: false });
         }
 
@@ -48,4 +51,4 @@ const userAuth = (req, res, next) => {
     }
 };
 
-export { is_blocked, userAuth };
+export { is_blocked , userAuth };
