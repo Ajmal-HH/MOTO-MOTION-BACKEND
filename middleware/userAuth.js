@@ -34,6 +34,7 @@ const is_blocked = async (req, res, next) => {
 const userAuth = (req, res, next) => {
     try {
         const token = req.headers.authorization?.split(' ')[1];
+        console.log(token,"middleware");
         if (!token || tokenBlacklist.has(token)) {
             return res.status(401).send({ message: "Auth failed", success: false });
         }
