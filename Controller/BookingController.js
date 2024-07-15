@@ -66,7 +66,11 @@ const conformBooking = async (req, res) => {
     try {
         const { pickUp, dropOff, bikeId, grandTotal, day } = req.body;
         const bookingDate = [pickUp, dropOff];
-        const user_id = req.session.userId;
+        const user_id = req.userId;
+
+        console.log(pickUp, dropOff, bikeId, grandTotal, day,"pickUp, dropOff, bikeId, grandTotal, day");
+        console.log(bookingDate,"bookingDate");
+        console.log(user_id,"user_id");
 
         const user = await User.findById(user_id);
         const bike = await Bikes.findById(bikeId);
