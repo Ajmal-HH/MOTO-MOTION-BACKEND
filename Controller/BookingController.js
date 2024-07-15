@@ -9,7 +9,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const checkAvailibility = async (req, res) => {
     try {
-        const userId = req.session.userId
+        const userId = req.userId
+        console.log(userId,"userId in check availibilty");
         const userVerified = await User.findOne({ _id: userId })
         if (userVerified.account_status === 'verified') {
             const { pickupDate, dropoffDate, id } = req.body
