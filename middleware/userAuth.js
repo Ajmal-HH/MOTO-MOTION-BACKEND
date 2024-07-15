@@ -88,7 +88,7 @@ const getUserIdFromToken = (req) => {
         throw new Error('Token is missing or blacklisted');
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    return decoded.id;  // Ensure your token includes the user ID as 'id'
+    return decoded.userId; 
 };
 
 // Middleware for checking if user is blocked
