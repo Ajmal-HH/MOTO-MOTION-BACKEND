@@ -74,7 +74,8 @@ const resendOTP = async(req,res)=>{
 
 const verifyOTP = asyncHandler(async(req,res)=>{
     const enteredOTP = req.body.otp
-    const sessionOTP = req.session.otp
+    console.log(req.otp,"req.otp");
+    const sessionOTP = req.otp
     const otp = parseInt(enteredOTP)
   
     if(otp===sessionOTP){

@@ -12,7 +12,7 @@ export const sendMail = async (email,req) => {
   try {
     const otp = generateOtp();
     console.log(otp);
-    req.session.otp = otp
+    req.otp = otp
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
