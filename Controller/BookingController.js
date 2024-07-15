@@ -64,24 +64,25 @@ const checkoutDetails = async (req, res) => {
         console.log(error.message);
     }
 }
-
 const conformBooking = async (req, res) => {
     try {
         const { pickUp, dropOff, bikeId, grandTotal, day } = req.body;
         const bookingDate = [pickUp, dropOff];
         const user_id = req.userId;
 
-        console.log(pickUp, dropOff, bikeId, grandTotal, day,"pickUp, dropOff, bikeId, grandTotal, day");
-        console.log(bookingDate,"bookingDate");
-        console.log(user_id,"user_id");
-        console.log(process.env.CLIENT_SITE_URL, "CLIENT_SITE_URL"); // This should log the single URL
-
+        console.log(pickUp, dropOff, bikeId, grandTotal, day, "pickUp, dropOff, bikeId, grandTotal, day");
+        console.log(bookingDate, "bookingDate");
+        console.log(user_id, "user_id");
 
         const user = await User.findById(user_id);
         const bike = await Bikes.findById(bikeId);
         const bikeOwner_id = bike.bikeowner_id;
 
-       
+        // Determine the correct client site URL dynamically
+        const clientSiteUrl = process.env.CLIENT_SITE_URL.includes(',')
+            ? process.env.CLIENT_SITE_URL.split(',')[0] // Pick the first URL
+            : process.env.CLIENT_SITE_URL;
+
         const sessionData = {
             payment_method_types: ['card'],
             mode: 'payment',
@@ -98,14 +99,13 @@ const conformBooking = async (req, res) => {
                 },
                 quantity: 1
             }],
-            success_url: `${process.env.CLIENT_SITE_URL}/booking-success`,   
-            cancel_url: `${process.env.CLIENT_SITE_URL}/bikes`,
-            
+            success_url: `${clientSiteUrl}/booking-success`,
+            cancel_url: `${clientSiteUrl}/bikes`,
         };
 
         await Bikes.findByIdAndUpdate(bikeId, {
             $push: { availability: bookingDate }
-        });   
+        });
 
         const session = await stripe.checkout.sessions.create(sessionData);
 
@@ -121,7 +121,6 @@ const conformBooking = async (req, res) => {
             day
         });
 
-        
         const booked = await booking.save();
         if (booked) {
             res.status(200).json({ status: true, url: session.url });
@@ -132,6 +131,7 @@ const conformBooking = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
 
 
 
