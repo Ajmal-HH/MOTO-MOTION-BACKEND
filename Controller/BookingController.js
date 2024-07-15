@@ -57,6 +57,7 @@ const checkAvailibility = async (req, res) => {
 const checkoutDetails = async (req, res) => {
     try {
         const bikeId = req.query.bikeId
+        console.log(bikeId, "bike id in checkout details....");
         const bikeDetails = await Bikes.findById({ _id: bikeId })
         res.json(bikeDetails)
     } catch (error) {
