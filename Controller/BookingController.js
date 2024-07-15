@@ -9,6 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const checkAvailibility = async (req, res) => {
     try {
+        console.log('enter to check availibility..');
         const userId = req.userId
         console.log(userId,"userId in check availibilty");
         const userVerified = await User.findOne({ _id: userId })
