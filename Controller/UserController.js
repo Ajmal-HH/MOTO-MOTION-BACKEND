@@ -408,7 +408,9 @@ const bikeReview = async(req,res) =>{
 const wallet = async (req,res) =>{
     try {
         const userId = req.userId
+        console.log(userId ,"userid in wallet");
         const user = await User.findOne({_id : userId})
+        console.log(user,"user in wallet");
         res.json(user.wallet)
     } catch (error) {
         console.log(error.message);
