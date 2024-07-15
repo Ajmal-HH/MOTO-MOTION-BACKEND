@@ -74,6 +74,8 @@ const conformBooking = async (req, res) => {
         console.log(pickUp, dropOff, bikeId, grandTotal, day,"pickUp, dropOff, bikeId, grandTotal, day");
         console.log(bookingDate,"bookingDate");
         console.log(user_id,"user_id");
+        console.log(process.env.CLIENT_SITE_URL, "CLIENT_SITE_URL"); // This should log the single URL
+
 
         const user = await User.findById(user_id);
         const bike = await Bikes.findById(bikeId);
