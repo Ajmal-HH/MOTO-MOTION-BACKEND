@@ -9,9 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const checkAvailibility = async (req, res) => {
     try {
-        console.log('enter to check availibility..');
         const userId = req.userId
-        console.log(userId,"userId in check availibilty");
         const userVerified = await User.findOne({ _id: userId })
         if (userVerified.account_status === 'verified') {
             const { pickupDate, dropoffDate, id } = req.body
@@ -57,7 +55,6 @@ const checkAvailibility = async (req, res) => {
 const checkoutDetails = async (req, res) => {
     try {
         const bikeId = req.query.bikeId
-        console.log(bikeId, "bike id in checkout details....");
         const bikeDetails = await Bikes.findById({ _id: bikeId })
         res.json(bikeDetails)
     } catch (error) {
@@ -69,11 +66,7 @@ const conformBooking = async (req, res) => {
         const { pickUp, dropOff, bikeId, grandTotal, day } = req.body;
         const bookingDate = [pickUp, dropOff];
         const user_id = req.userId;
-
-        console.log(pickUp, dropOff, bikeId, grandTotal, day, "pickUp, dropOff, bikeId, grandTotal, day");
-        console.log(bookingDate, "bookingDate");
-        console.log(user_id, "user_id");
-
+        
         const user = await User.findById(user_id);
         const bike = await Bikes.findById(bikeId);
         const bikeOwner_id = bike.bikeowner_id;
