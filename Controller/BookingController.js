@@ -96,7 +96,7 @@ const conformBooking = async (req, res) => {
                 },
                 quantity: 1
             }],
-            success_url: `${process.env.CLIENT_SITE_URL}/booking-success`,
+            success_url: `${process.env.CLIENT_SITE_URL}/booking-success`,   
             cancel_url: `${process.env.CLIENT_SITE_URL}/bikes`,
             
         };
