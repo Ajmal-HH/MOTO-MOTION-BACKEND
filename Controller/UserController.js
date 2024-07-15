@@ -196,7 +196,7 @@ const verifyLogin = asyncHandler(async (req, res) => {
         }
 
         req.session.userId = userData._id;
-        
+
         console.log(req.session.userId,'req.session.userId>>>> user Login');
 
 
@@ -238,7 +238,7 @@ const bikeDetails = asyncHandler(async(req,res)=>{
 
 const userProfile = async(req,res) =>{
     console.log('hello111');
-    const userId = req.session.userId
+    const userId = req.userId
     console.log(userId,"userId");
     const user = await User.findOne({_id : userId})
     console.log(user,"userData");
