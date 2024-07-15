@@ -7,14 +7,14 @@ dotenv.config();
 // Middleware for checking if user is blocked
 const is_blocked = async (req, res, next) => {
     try {
-      const id = req.session.userId;
-      console.log(id, "id in middleware");
+      const userId = req.session.userId;
+      console.log(userId, "id in middleware");
   
-      if (!id) {
+      if (!userId) {
         return res.redirect('/'); // Redirect or handle as per your application's logic
       }
   
-      const findUser = await User.findById(id);
+      const findUser = await User.findById(userId);
       if (findUser && findUser.isBlocked) {
         req.session.userData = null
         req.session.otp = null
