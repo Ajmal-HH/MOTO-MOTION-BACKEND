@@ -74,7 +74,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../model/userModel.js';
-import { tokenBlacklist } from '../controller/userController.js';
+import { tokenBlacklist } from '../Controller/UserController.js';
 
 dotenv.config();
 
