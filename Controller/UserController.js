@@ -337,7 +337,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const userBookingList = async (req, res) => {
     try {
-      const userId = req.session.userId;
+      const userId = req.userId;
       const bookinglist = await Booking.find({ user_id: userId });
   
       let bookingsWithBikes = [];
