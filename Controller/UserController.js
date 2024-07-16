@@ -83,6 +83,7 @@ const resendOTP = async(req,res)=>{
 }
 
 const verifyOTP = asyncHandler(async(req,res)=>{
+    console.log(req.body,"req.boody");
     const enteredOTP = req.body.otp
     const generatedOTP = req.body.generatedOTP
     const userData = req.body.userData
