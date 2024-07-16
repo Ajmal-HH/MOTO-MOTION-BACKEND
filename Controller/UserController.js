@@ -59,16 +59,15 @@ const verifyUser = asyncHandler(async (req, res) => {
             req.session.userData = req.body
             sendMail(email, req)
             .then(generatedOTP => {
-                console.log(generatedOTP, "generatedOTP");
                 const OTP = parseInt(generatedOTP, 10);
-                console.log(OTP, "OTPPPPPP");
+                res.status(200)
+                .json({OTP})
             })
             .catch(error => {
                 console.error("Error sending mail:", error);
             });
         
-            res.status(200)
-            .json({status:true})      
+                  
     } 
     } catch (error) {   
         console.log(error.message);
