@@ -84,13 +84,13 @@ const resendOTP = async(req,res)=>{
 
 const verifyOTP = asyncHandler(async(req,res)=>{
     const enteredOTP = req.body.otp
+    const generatedOTP = req.body.generatedOTP
+    console.log(generatedOTP,"generatedOTP");
     const userData = req.body.userData
-    console.log(userData);
     // const sessionOTP = req.otp
     const otp = parseInt(enteredOTP)
   
-    if(otp===sessionOTP){
-        const userData = req.session.userData
+    if(otp===generatedOTP){
         const {name,email, password, mobile } = userData
             const spassword = await securePassword(password)
         const user = new User({
