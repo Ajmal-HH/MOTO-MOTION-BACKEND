@@ -52,8 +52,10 @@ const verifyUser = asyncHandler(async (req, res) => {
 
         const userExist = await User.findOne({ email })
         if (userExist) {
+            console.log("user already exist");
             res.status(400).json({message:'User is already exists..'})
         }else{
+            console.log("entered to else");
             req.session.userData = req.body
             const userOTP = sendMail(email,req)
             console.log(userOTP,"userOTP....");
@@ -77,8 +79,7 @@ const verifyOTP = asyncHandler(async(req,res)=>{
     const enteredOTP = req.body.otp
     const userData = req.body.userData
     console.log(userData);
-    console.log(req.otp,"req.otp");
-    const sessionOTP = req.otp
+    // const sessionOTP = req.otp
     const otp = parseInt(enteredOTP)
   
     if(otp===sessionOTP){
