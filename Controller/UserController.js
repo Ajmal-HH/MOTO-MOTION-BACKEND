@@ -86,6 +86,7 @@ const verifyOTP = asyncHandler(async(req,res)=>{
     const enteredOTP = req.body.otp
     const generatedOTP = req.body.generatedOTP
     const userData = req.body.userData
+    console.log(userData,"userData");
     // const sessionOTP = req.otp
     const otp = parseInt(enteredOTP)
     const GOTP = parseInt(generatedOTP)
