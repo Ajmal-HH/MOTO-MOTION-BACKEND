@@ -66,10 +66,12 @@ const conformBooking = async (req, res) => {
         const { pickUp, dropOff, bikeId, grandTotal, day } = req.body;
         const bookingDate = [pickUp, dropOff];
         const user_id = req.userId;
-        
+
         const user = await User.findById(user_id);
         const bike = await Bikes.findById(bikeId);
         const bikeOwner_id = bike.bikeowner_id;
+
+        console.log(process.env.CLIENT_SITE_URL.split(',')[0] ,"2 url....");
 
         // Determine the correct client site URL dynamically
         const clientSiteUrl = process.env.CLIENT_SITE_URL.includes(',')
