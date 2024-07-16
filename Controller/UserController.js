@@ -55,7 +55,8 @@ const verifyUser = asyncHandler(async (req, res) => {
             res.status(400).json({message:'User is already exists..'})
         }else{
             req.session.userData = req.body
-            sendMail(email,req)
+            const userOTP = sendMail(email,req)
+            console.log(userOTP,"userOTP....");
             res.status(200)
             .json({status:true})      
     } 
