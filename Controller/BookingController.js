@@ -71,12 +71,8 @@ const conformBooking = async (req, res) => {
         const bike = await Bikes.findById(bikeId);
         const bikeOwner_id = bike.bikeowner_id;
 
-        console.log(process.env.CLIENT_SITE_URL.split(',')[0] ,"2 url....");
 
-        // Determine the correct client site URL dynamically
-        const clientSiteUrl = process.env.CLIENT_SITE_URL.includes(',')
-            ? process.env.CLIENT_SITE_URL.split(',')[0] // Pick the first URL
-            : process.env.CLIENT_SITE_URL;
+        const clientSiteUrl =  process.env.CLIENT_SITE_URL;
 
         const sessionData = {
             payment_method_types: ['card'],
