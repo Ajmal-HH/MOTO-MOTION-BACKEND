@@ -39,6 +39,7 @@ export const sendMail = async (email,req) => {
       }
     });
 
+ 
     return otp;
   } catch (error) {
     console.log(error);
