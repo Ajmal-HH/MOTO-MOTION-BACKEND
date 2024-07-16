@@ -88,10 +88,11 @@ const verifyOTP = asyncHandler(async(req,res)=>{
     const userData = req.body.userData
     // const sessionOTP = req.otp
     const otp = parseInt(enteredOTP)
+    const GOTP = parseInt(generatedOTP)
     console.log(typeof generatedOTP,"generatedOTP");
     console.log(typeof otp,"enterd otp");
     
-    if(otp===generatedOTP){
+    if(otp===GOTP){
         const {name,email, password, mobile } = userData
             const spassword = await securePassword(password)
         const user = new User({
