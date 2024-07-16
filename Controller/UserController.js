@@ -58,6 +58,7 @@ const verifyUser = asyncHandler(async (req, res) => {
             console.log("entered to else");
             req.session.userData = req.body
             const generatedOTP = sendMail(email,req)
+            console.log(generatedOTP,"generatedOTP");
             const OTP = parseInt(generatedOTP, 10); 
             console.log(OTP,"OTPPPPPP");
             res.status(200)
