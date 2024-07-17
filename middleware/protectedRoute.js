@@ -3,7 +3,7 @@ import User from '../model/userModel.js'
 
 const protectedRoute = async (req,res,next) =>{
     try {
-        const token = req.cookies.jwt
+        const token = req.header('Authorization');
 
         if(!token){
             res.status(401).json({error : 'Unauthorized-no token'})
