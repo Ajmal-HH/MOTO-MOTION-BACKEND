@@ -91,7 +91,6 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
         }
 
         const bikeOwnerData = await bikeOwner.findOne({ email })
-        req.session.ownerId = bikeOwnerData._id
 
         if (bikeOwnerData) {
             const passwordMatch = await bcrypt.compare(password, bikeOwnerData.password)
@@ -141,10 +140,10 @@ const loadOwnerDetails = async (req, res) => {
 
 const addBike = asyncHandler(async (req, res) => {
     try {
-        const bikeowner_id = req.session.ownerId
         const { bikeName, bikeNO, location,
-            bikeCC, rent, bikeType, details, address, pinCode } = req.body
-
+            bikeCC, rent, bikeType, details, address, pinCode,bikeOwnerData } = req.body
+            
+            const bikeowner_id = bikeOwnerData._id
             //   const imagePaths = req.files.map(file => file.filename);
 
          const images = req.files
@@ -288,7 +287,6 @@ const ownerEditBike = async (req, res) => {
 }
 
 const logoutOwner = async (req, res) => {
-    req.session.ownerId = null
     res.cookie("bikeOwner-jwt", "", {
         httpOnly: false,
         expires: new Date(0),
