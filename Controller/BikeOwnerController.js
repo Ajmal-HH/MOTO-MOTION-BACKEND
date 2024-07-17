@@ -97,18 +97,19 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
             const passwordMatch = await bcrypt.compare(password, bikeOwnerData.password)
             if (passwordMatch) {
                 if (!bikeOwnerData?.is_blocked) {
-                    const token = generateToken(bikeOwnerData._id)
-                    res.cookie('bikeOwner-jwt', token, {
-                        httpOnly: false,
-                        secure: false,
-                        sameSite: "strict",
-                    })
+                    const ownerToken = generateToken(bikeOwnerData._id)
+                    // res.cookie('bikeOwner-jwt', token, {
+                    //     httpOnly: false,
+                    //     secure: false,
+                    //     sameSite: "strict",
+                    // })
                     return res.status(200)
                         .json({
                             status: true,
                             email: bikeOwnerData.email,
                             name: bikeOwnerData.name,
-                            mobile: bikeOwnerData.mobile
+                            mobile: bikeOwnerData.mobile,
+                            ownerToken
                         })
                 } else {
                     res.status(403)

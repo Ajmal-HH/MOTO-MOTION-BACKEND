@@ -52,11 +52,8 @@ const verifyUser = asyncHandler(async (req, res) => {
 
         const userExist = await User.findOne({ email })
         if (userExist) {
-            console.log("user already exist");
             res.status(400).json({message:'User is already exists..'})
         }else{
-            console.log("entered to else");
-            req.session.userData = req.body
             sendMail(email, req)
             .then(generatedOTP => {
                 const OTP = parseInt(generatedOTP, 10);
@@ -66,16 +63,15 @@ const verifyUser = asyncHandler(async (req, res) => {
             .catch(error => {
                 console.error("Error sending mail:", error);
             });
-        
-                  
+               
     } 
-    } catch (error) {   
+    } catch (error) {
         console.log(error.message);
     }
 })
 
 const resendOTP = async(req,res)=>{
-    const userData = req.session.userData
+    const userData = req.body
     const {name,email} = userData
     sendMail(email,name,req)
     res.status(200)
@@ -83,20 +79,15 @@ const resendOTP = async(req,res)=>{
 }
 
 const verifyOTP = asyncHandler(async(req,res)=>{
-    console.log(req.body,"req.boody");
     const enteredOTP = req.body.otp
     const generatedOTP = req.body.generatedOTP
     const userData = req.body.userData
-    console.log(userData,"userData");
-    // const sessionOTP = req.otp
-    const otp = parseInt(enteredOTP)
+    const OTP = parseInt(enteredOTP)
     const GOTP = parseInt(generatedOTP)
-    console.log(typeof generatedOTP,"generatedOTP");
-    console.log(typeof otp,"enterd otp");
     
-    if(otp===GOTP){
+    if(OTP===GOTP){
         const {name,email, password, mobile } = userData
-            const spassword = await securePassword(password)
+        const spassword = await securePassword(password)
         const user = new User({
             name,
             email,
@@ -109,14 +100,12 @@ const verifyOTP = asyncHandler(async(req,res)=>{
             .json({status : true})
         }else{
             res.status(400)
-            json({message:'Registration failed'})
+            .json({message:'Registration failed'})
         }
     }else{
         res.status(400)
         .json({message : 'Invalid OTP'})
     }
-
- 
 })
 
 
@@ -155,7 +144,6 @@ const verifyLogin = asyncHandler(async (req, res) => {
             return res.status(403).json({ message: 'User is blocked by admin' });
         }
 
-        req.session.userId = userData._id;
 
         const token = generateToken(userData._id);
 
@@ -263,10 +251,10 @@ const logoutUser = asyncHandler(async (req, res) => {
     const {email} =  req.body
     const user = await User.findOne({email})
     if(user){
-        req.session.forgUserId = user._id 
+        const forgUserId = user._id 
         sendMail(email,req)
         res.status(200)
-        .json({status : true})
+        .json(forgUserId)
     }else{  
         res.status(401)  
         .json({message : 'Unauthorized user.'})
@@ -275,9 +263,10 @@ const logoutUser = asyncHandler(async (req, res) => {
 
   const verifyForgPasOTP = async (req,res)=>{
     const enteredOTP = req.body.otp
-    const sessionOTP = req.session.otp
-    const otp = parseInt(enteredOTP)
-    if(otp === sessionOTP){
+    const generatedOTP = req.body.generatedOTP
+    const OTP = parseInt(enteredOTP)
+    const GOTP = parseInt(generatedOTP)
+    if(OTP === GOTP){
         res.status(200)
         .json({status : true})
     }else{
@@ -401,7 +390,7 @@ const bikeReview = async(req,res) =>{
     try {
         const {review,bikeId} = req.body
         if(review.trim().length !=0){
-        const userId = req.session.userId
+        const userId = req.userId
         const user = await User.findOne({_id : userId})
         const userReview = {
             username: user.name,
@@ -424,9 +413,7 @@ const bikeReview = async(req,res) =>{
 const wallet = async (req,res) =>{
     try {
         const userId = req.userId
-        console.log(userId ,"userid in wallet");
         const user = await User.findOne({_id : userId})
-        console.log(user,"user in wallet");
         res.json(user.wallet)
     } catch (error) {
         console.log(error.message);
