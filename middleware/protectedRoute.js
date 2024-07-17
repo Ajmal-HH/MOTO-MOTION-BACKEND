@@ -4,6 +4,7 @@ import User from '../model/userModel.js'
 const protectedRoute = async (req,res,next) =>{
     try {
         const token = req.header('Authorization');
+        console.log(token,"token in protectedroute...");
 
         if(!token){
             res.status(401).json({error : 'Unauthorized-no token'})
