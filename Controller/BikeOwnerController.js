@@ -125,9 +125,7 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
 })
 
 const loadOwnerDetails = async (req, res) => {
-    console.log("entered to load owner detatils..");
     const ownerData = req.body
-    console.log(ownerData,"ownerData......");
     const owner = await bikeOwner.findOne({ _id: ownerData._id })
     if (owner) {
         res.json(owner)
@@ -142,6 +140,9 @@ const addBike = asyncHandler(async (req, res) => {
     try {
         const { bikeName, bikeNO, location,
             bikeCC, rent, bikeType, details, address, pinCode,bikeOwnerData } = req.body
+
+            console.log(bikeName, bikeNO, location,
+                bikeCC, rent, bikeType, details, address, pinCode,bikeOwnerData );
             
             const bikeowner_id = bikeOwnerData._id
             //   const imagePaths = req.files.map(file => file.filename);
@@ -325,7 +326,6 @@ const bikeOwnerDashboard = async (req, res) => {
         const totolBikes = bikes.length;
         const totalBookings = bookings.length;
 
-        console.log(bookings,"bookingss");
 
         const revenue = await Booking.aggregate([
             {
