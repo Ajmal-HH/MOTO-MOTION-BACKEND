@@ -38,14 +38,14 @@ const adminAuth = asyncHandler(async (req, res) => {
             const matchPassword = await bcrypt.compare(password, adminData.password)
 
             if (matchPassword) {
-                const token = generateToken(adminData._id)
-                res.cookie('jwt-admin', token, {
-                    httpOnly: false,
-                    secure: false,
-                    sameSite: "strict",
-                })
+                const admintoken = generateToken(adminData._id)
+                // res.cookie('jwt-admin', token, {
+                //     httpOnly: false,
+                //     secure: false,
+                //     sameSite: "strict",
+                // })
                 return res.status(200)
-                    .json({ message: 'Login Successfully' })
+                    .json({ message: 'Login Successfully',admintoken })
             } else {
                 res.status(401)
                     .json({ message: 'Invalid email or password' })
