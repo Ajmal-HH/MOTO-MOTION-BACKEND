@@ -10,7 +10,7 @@ bikeowner_router.use(express.static('public'))
 
 bikeowner_router.post('/bikeowner-signup',bikeOwnerSignup)
 bikeowner_router.post('/bikeowner-login',bikeOwnerLogin)
-bikeowner_router.get('/bikeowner-dashboard',bikeOwnerDashboard)
+bikeowner_router.post('/bikeowner-dashboard',bikeOwnerDashboard)
 bikeowner_router.get('/loadowner-details',loadOwnerDetails)
 bikeowner_router.post('/addbike',uploadprdt.array('image'),addBike)
 bikeowner_router.get('/bike-list',bikeList)
