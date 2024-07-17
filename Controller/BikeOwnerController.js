@@ -317,7 +317,6 @@ const bookingList = async (req, res) => {
 const bikeOwnerDashboard = async (req, res) => {
     try {
         const ownerData = req.body.bikeOwnerData
-        console.log(ownerData,"ownerData......");
         const id = ownerData._id
 
         const bookings = await Booking.find({ bikeOwner_id: id });
@@ -325,6 +324,8 @@ const bikeOwnerDashboard = async (req, res) => {
         const bikes = await Bike.find({ bikeowner_id: id });
         const totolBikes = bikes.length;
         const totalBookings = bookings.length;
+
+        console.log(bookings,"bookingss");
 
         const revenue = await Booking.aggregate([
             {
