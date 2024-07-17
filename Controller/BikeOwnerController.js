@@ -127,7 +127,7 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
 
 const loadOwnerDetails = async (req, res) => {
     const ownerData = req.body
-    console.log(ownerData,"ownerData");
+    console.log(ownerData,"ownerData......");
     const owner = await bikeOwner.findOne({ _id: ownerData._id })
     if (owner) {
         res.json(owner)
