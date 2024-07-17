@@ -191,7 +191,8 @@ const addBike = asyncHandler(async (req, res) => {
 
 const bikeList = async (req, res) => {
     try {
-        const bikeOwnerId = req.session.ownerId
+        const  bikeOwnerData = req.body.bikeOwnerData
+        const bikeOwnerId = bikeOwnerData._id
         const bike = await Bike.find({ bikeowner_id: bikeOwnerId })
         res.json(bike)
     } catch (error) {
