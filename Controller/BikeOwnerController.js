@@ -316,7 +316,8 @@ const bookingList = async (req, res) => {
 
 const bikeOwnerDashboard = async (req, res) => {
     try {
-        const id = req.session.ownerId;
+        const ownerData = req.body
+        console.log(ownerData,"ownerData......");
 
         const bookings = await Booking.find({ bikeOwner_id: id });
         const owner = await bikeOwner.findOne({ _id: id });
