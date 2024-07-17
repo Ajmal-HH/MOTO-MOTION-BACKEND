@@ -290,6 +290,7 @@ const ownerEditBike = async (req, res) => {
 
 const logoutOwner = async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
+    console.log(token,"logout bike owner ");
     if (token) {
         tokenBlacklist.add(token);
         res.status(200).json({ message: 'Owner logged out successfully' });
