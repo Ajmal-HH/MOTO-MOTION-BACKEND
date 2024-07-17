@@ -106,9 +106,7 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
                     return res.status(200)
                         .json({
                             status: true,
-                            email: bikeOwnerData.email,
-                            name: bikeOwnerData.name,
-                            mobile: bikeOwnerData.mobile,
+                            bikeOwnerData,
                             ownerToken
                         })
                 } else {
@@ -129,8 +127,8 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
 })
 
 const loadOwnerDetails = async (req, res) => {
-    const ownerId = req.session.ownerId
-    const owner = await bikeOwner.findOne({ _id: ownerId })
+    const ownerData = req.body
+    const owner = await bikeOwner.findOne({ _id: ownerData._id })
     if (owner) {
         res.json(owner)
     } else {
