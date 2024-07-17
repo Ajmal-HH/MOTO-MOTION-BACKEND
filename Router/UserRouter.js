@@ -67,6 +67,6 @@ user_router.get('/user-bookinglist', userAuth, is_blocked, userBookingList);
 user_router.get('/filterbikes', filterBikes);
 user_router.post('/bike-review', bikeReview);
 user_router.get('/wallet',userAuth, is_blocked, wallet);
-user_router.get('/cancel-booking', cancelBooking);
+user_router.get('/cancel-booking',userAuth, cancelBooking);
 
 export default user_router;

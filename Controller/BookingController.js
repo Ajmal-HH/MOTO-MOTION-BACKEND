@@ -146,7 +146,7 @@ const bookingAction = async (req, res) => {
 const cancelBooking = async(req,res) =>{
     try {
         const bookingId = req.query.bookingId
-        const userId = req.session.userId
+        const userId = req.userId
     
         const booking = await Booking.findByIdAndUpdate(bookingId, {
             $set: {
