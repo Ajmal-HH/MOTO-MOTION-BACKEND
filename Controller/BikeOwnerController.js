@@ -297,7 +297,8 @@ const logoutOwner = async (req, res) => {
 
 const bookingList = async (req, res) => {
     try {
-        const bikeOwnerId = req.session.ownerId
+        const ownerData = req.body.bikeOwnerData
+        const bikeOwnerId = ownerData._id
         const bookinglist = await Booking.find({ bikeOwner_id: bikeOwnerId })
 
         let bookingsWithBikes = [];
