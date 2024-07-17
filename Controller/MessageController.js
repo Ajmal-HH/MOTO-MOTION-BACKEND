@@ -66,7 +66,9 @@ const fetchChats = async (req, res) => {
 const getReceiverData = async (req,res) =>{
     try {
         const {receiverId} = req.query
+        console.log(receiverId,"receiverId");
         const receiverData =  await bikeOwner.findOne({_id : receiverId})
+        console.log(receiverData,"receiverData");
         res.json(receiverData)
     } catch (error) {
       console.log("Error in getReceiverData : ", error.message );  
