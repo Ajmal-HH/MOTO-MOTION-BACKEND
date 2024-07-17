@@ -105,7 +105,6 @@ const bikeOwnerLogin = asyncHandler(async (req, res) => {
                     // })
                     return res.status(200)
                         .json({
-                            status: true,
                             bikeOwnerData,
                             ownerToken
                         })
