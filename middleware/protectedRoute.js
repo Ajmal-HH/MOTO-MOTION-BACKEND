@@ -4,7 +4,6 @@ import User from '../model/userModel.js'
 const protectedRoute = async (req,res,next) =>{
     try {
         const token = req.header('Authorization');
-        console.log(token,"token in protectedroute...");
 
         if(!token){
             res.status(401).json({error : 'Unauthorized-no token'})
@@ -16,6 +15,7 @@ const protectedRoute = async (req,res,next) =>{
         }
         
         const user = await User.findById(decoded.userId).select("-password")
+        console.log(user,"user in protected route>><<<");
 
         if(!user){
             return res.status(404).json({error :  "user nor found"})
