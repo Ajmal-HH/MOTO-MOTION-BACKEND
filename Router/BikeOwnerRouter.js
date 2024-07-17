@@ -17,7 +17,7 @@ bikeowner_router.get('/bike-list',bikeList)
 bikeowner_router.get('/deletebike',deleteBike)
 bikeowner_router.get('/bikeowner-loadbikeedit',loadOwnerEditBike)
 bikeowner_router.post('/bikeowner-editbike',uploadprdt.array('image'),ownerEditBike)
-bikeowner_router.get('/booking-list',bookingList)
+bikeowner_router.post('/booking-list',bookingList)
 bikeowner_router.get('/action-booking',bookingAction)
 bikeowner_router.get('/owner-logout',logoutOwner)
 
