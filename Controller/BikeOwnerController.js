@@ -141,9 +141,9 @@ const addBike = asyncHandler(async (req, res) => {
         const { bikeName, bikeNO, location,
             bikeCC, rent, bikeType, details, address, pinCode,bikeOwnerData } = req.body
 
-            console.log(bikeOwnerData,"bikeowenerdata>>>>" );
+            const ownerData =  JSON.parse(bikeOwnerData);
             
-            const bikeowner_id = bikeOwnerData._id
+            const bikeowner_id = ownerData._id
             //   const imagePaths = req.files.map(file => file.filename);
 
          const images = req.files
