@@ -6,6 +6,8 @@ import Bike from '../model/bikeModel.js'
 import Booking from '../model/bookingModel.js'
 import cloudinary from '../utils/cloudinary.js'
 
+export const tokenBlacklist = new Set();
+
 
 const securePassword = async (password) => {
     try {
@@ -287,11 +289,13 @@ const ownerEditBike = async (req, res) => {
 }
 
 const logoutOwner = async (req, res) => {
-    res.cookie("bikeOwner-jwt", "", {
-        httpOnly: false,
-        expires: new Date(0),
-    });
-    res.status(200).json({ message: "Bike Owner logged out" });
+    const token = req.headers.authorization.split(' ')[1];
+    if (token) {
+        tokenBlacklist.add(token);
+        res.status(200).json({ message: 'Owner logged out successfully' });
+    } else {
+        res.status(400).json({ message: 'No token provided' });
+    }
 }
 
 const bookingList = async (req, res) => {

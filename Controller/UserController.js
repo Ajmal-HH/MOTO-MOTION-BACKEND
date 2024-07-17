@@ -232,10 +232,7 @@ const editUser = async(req, res) =>{
 }
 
 const logoutUser = asyncHandler(async (req, res) => {
-    req.session.userData = null
-    req.session.otp = null
-    req.session.userId = null
-    req.session.forgUserId = null
+
     const token = req.headers.authorization.split(' ')[1];
     if (token) {
         tokenBlacklist.add(token);

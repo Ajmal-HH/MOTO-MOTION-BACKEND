@@ -6,6 +6,9 @@ import bikeOwner from '../model/bikeOwnerModel.js'
 import Booking from '../model/bookingModel.js'
 import Bikes from '../model/bikeModel.js'
 
+export const tokenBlacklist = new Set();
+
+
 const securePassword = async (password) => {
     try {
         const passwordHash = await bcrypt.hash(password, 10)
@@ -61,14 +64,15 @@ const adminAuth = asyncHandler(async (req, res) => {
 
 })
 
-const userList = asyncHandler(async (req, res) => {
+const userList = async (req, res) => {
     try {
         const users = await User.find({ isAdmin: false })
         res.json(users)
     } catch (error) {
         console.log(error.message);
     }
-})
+}
+
 const verifyDocumentList = async (req, res) => {
     try {
         const users = await User.find({ account_status: 'verifying document' })
@@ -268,11 +272,13 @@ const adminEditOwer = async (req, res) => {
 }
 
 const logoutAdmin = async (req, res) => {
-    res.cookie("jwt-admin", "", {
-        httpOnly: false,
-        expires: new Date(0),
-    });
-    res.status(200).json({ status: true });
+    const token = req.headers.authorization.split(' ')[1];
+    if (token) {
+        tokenBlacklist.add(token);
+        res.status(200).json({ message: 'Admin logged out successfully' });
+    } else {
+        res.status(400).json({ message: 'No token provided' });
+    }
 }
 
 const adminBookingList = async (req, res) => {
