@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../model/userModel.js';
 import bikeOwner from '../model/bikeOwnerModel.js';
-import Admin from '../model/adminModel.js'; // Assuming you have an Admin model
 
 const protectedRoute = async (req, res, next) => {
     try {
@@ -33,7 +32,7 @@ const protectedRoute = async (req, res, next) => {
                 user = await bikeOwner.findById(decoded.userId).select("-password");
                 break;
             case 'admintoken':
-                user = await Admin.findById(decoded.userId).select("-password");
+                user = await User.findById(decoded.userId).select("-password");
                 break;
             default:
                 return res.status(401).json({ error: 'Unauthorized - invalid role' });
