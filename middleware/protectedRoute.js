@@ -1,42 +1,31 @@
+
+
+
 import jwt from 'jsonwebtoken';
 import User from '../model/userModel.js';
-import bikeOwner from '../model/bikeOwnerModel.js';
 
 const protectedRoute = async (req, res, next) => {
     try {
         const authHeader = req.header('Authorization');
-        console.log(`Authorization Header: ${authHeader}`);
+        console.log(authHeader, "token in protected route ?????");
 
         if (!authHeader) {
             return res.status(401).json({ error: 'Unauthorized - no token provided' });
         }
 
-        // Extract the token after "Bearer "
+        // Remove "Bearer " from the token
         const token = authHeader.split(' ')[1];
-        console.log(`Extracted Token: ${token}`);
-
-        if (!token) {
-            return res.status(401).json({ error: 'Unauthorized - token not found' });
-        }
+        console.log(token, "token after removing Bearer");
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(`Decoded Token: ${JSON.stringify(decoded)}`);
 
         if (!decoded) {
             return res.status(401).json({ error: 'Unauthorized - token is not valid' });
         }
 
-        let user;
-        switch (decoded.role) {
-            case 'token':
-                user = await User.findById(decoded.userId).select("-password");
-                break;
-            case 'ownerToken':
-                user = await bikeOwner.findById(decoded.userId).select("-password");
-                break;
-            default:
-                return res.status(401).json({ error: 'Unauthorized - invalid role' });
-        }
+        console.log(decoded, "decoded in protected route>><<<");
+
+        const user = await User.findById(decoded.userId).select("-password");
 
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -45,50 +34,9 @@ const protectedRoute = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.error('Error in protectedRoute middleware:', error);
+        console.log('Error from protectedRoute middleware', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
 
 export default protectedRoute;
-
-
-// import jwt from 'jsonwebtoken';
-// import User from '../model/userModel.js';
-
-// const protectedRoute = async (req, res, next) => {
-//     try {
-//         const authHeader = req.header('Authorization');
-//         console.log(authHeader, "token in protected route ?????");
-
-//         if (!authHeader) {
-//             return res.status(401).json({ error: 'Unauthorized - no token provided' });
-//         }
-
-//         // Remove "Bearer " from the token
-//         const token = authHeader.split(' ')[1];
-//         console.log(token, "token after removing Bearer");
-
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-//         if (!decoded) {
-//             return res.status(401).json({ error: 'Unauthorized - token is not valid' });
-//         }
-
-//         console.log(decoded, "decoded in protected route>><<<");
-
-//         const user = await User.findById(decoded.userId).select("-password");
-
-//         if (!user) {
-//             return res.status(404).json({ error: "User not found" });
-//         }
-
-//         req.user = user;
-//         next();
-//     } catch (error) {
-//         console.log('Error from protectedRoute middleware', error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// };
-
-// export default protectedRoute;
