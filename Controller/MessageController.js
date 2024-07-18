@@ -79,9 +79,9 @@ const getReceiverData = async (req,res) =>{
 const getReciverDataOwner = async (req,res) =>{
   try {
     const { receiverId } = req.params;
-    const ownerData = req.body.bikeOwnerData
-    console.log(ownerData,"Ownerdata");
-    const senderId = ownerData._id
+    const bikeOwnerId = req.bikeOwnerId
+    console.log(bikeOwnerId,"bikeOwnerId");
+    const senderId = bikeOwnerId
     const receiverData = await User.findOne({_id : receiverId})
     res.json({receiverData,senderId})
   } catch (error) {
