@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import BikeOwner from '../model/bikeOwnerModel.js';
 import { tokenBlacklist } from '../Controller/BikeOwnerController.js';
 
 dotenv.config();
@@ -26,7 +25,7 @@ const protectedRoute = async (req, res, next) => {
         next(); // Proceed to next middleware or route handler
     } catch (error) {
         console.log("Error in bikeOwnerAuth middleware:", error.message);
-        return res.status(401).send({ message: `Auth failed: ${error.message}`, success: false });
+        return res.status(401).json({ message: `Auth failed: ${error.message}`, success: false });
     }
 };
 
