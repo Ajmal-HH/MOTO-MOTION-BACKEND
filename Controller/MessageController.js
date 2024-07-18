@@ -8,6 +8,7 @@ const sendMessage = async (req, res) => {
   try{    
         
     const { message , userId,senderId } = req.body;
+    console.log( message , userId,senderId,"send message data");
     const myId=senderId
       if (!message) {
       return res.status(400).json({ error: 'Message is required' });
