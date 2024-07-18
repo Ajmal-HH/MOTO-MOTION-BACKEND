@@ -45,7 +45,7 @@ const sendMessage = async (req, res) => {
 const fetchChats = async (req, res) => {
   try {
     
-      const { id,myId } = req.query; //studentId
+      const { id,myId } = req.query; //userId
      
       const chat = await Conversation.findOne({
         participants: { $all: [myId, id] },
@@ -79,7 +79,9 @@ const getReceiverData = async (req,res) =>{
 const getReciverDataOwner = async (req,res) =>{
   try {
     const { receiverId } = req.params;
-    const senderId = req.session.ownerId
+    const ownerData = req.user
+    console.log(ownerData,"Ownerdata");
+    const senderId = ownerData._id
     const receiverData = await User.findOne({_id : receiverId})
     res.json({receiverData,senderId})
   } catch (error) {
