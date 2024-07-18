@@ -5,23 +5,26 @@ import bikeOwner from '../model/bikeOwnerModel.js';
 const protectedRoute = async (req, res, next) => {
     try {
         const authHeader = req.header('Authorization');
-        console.log(authHeader, "token in protected route ?????");
+        console.log(`Authorization Header: ${authHeader}`);
 
         if (!authHeader) {
             return res.status(401).json({ error: 'Unauthorized - no token provided' });
         }
 
-        // Remove "Bearer " from the token
+        // Extract the token after "Bearer "
         const token = authHeader.split(' ')[1];
-        console.log(token, "token after removing Bearer");
+        console.log(`Extracted Token: ${token}`);
+
+        if (!token) {
+            return res.status(401).json({ error: 'Unauthorized - token not found' });
+        }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(`Decoded Token: ${JSON.stringify(decoded)}`);
 
         if (!decoded) {
             return res.status(401).json({ error: 'Unauthorized - token is not valid' });
         }
-
-        console.log(decoded, "decoded in protected route>><<<");
 
         let user;
         switch (decoded.role) {
@@ -30,9 +33,6 @@ const protectedRoute = async (req, res, next) => {
                 break;
             case 'ownerToken':
                 user = await bikeOwner.findById(decoded.userId).select("-password");
-                break;
-            case 'admintoken':
-                user = await User.findById(decoded.userId).select("-password");
                 break;
             default:
                 return res.status(401).json({ error: 'Unauthorized - invalid role' });
@@ -45,13 +45,12 @@ const protectedRoute = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.log('Error from protectedRoute middleware', error);
+        console.error('Error in protectedRoute middleware:', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
 
 export default protectedRoute;
-
 
 
 // import jwt from 'jsonwebtoken';

@@ -8,7 +8,7 @@ const message_router = express.Router()
 message_router.post('/send',protectedRoute,sendMessage)
 message_router.get('/fetchchats',protectedRoute,fetchChats)
 message_router.get('/getreceiverdata',protectedRoute,getReceiverData)
-message_router.get('/receiverdata/:receiverId',protectedRoute,getReciverDataOwner)
+message_router.post('/receiverdata/:receiverId',protectedRoute,getReciverDataOwner)
 
 
 
