@@ -3,12 +3,16 @@ import User from '../model/userModel.js';
 
 const protectedRoute = async (req, res, next) => {
     try {
-        const token = req.header('Authorization');
-        console.log(token, "token in protected route ?????");
+        const authHeader = req.header('Authorization');
+        console.log(authHeader, "token in protected route ?????");
 
-        if (!token) {
+        if (!authHeader) {
             return res.status(401).json({ error: 'Unauthorized - no token provided' });
         }
+
+        // Remove "Bearer " from the token
+        const token = authHeader.split(' ')[1];
+        console.log(token, "token after removing Bearer");
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -27,7 +31,7 @@ const protectedRoute = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.log('Error from protectedRoute middleware', error.message);
+        console.log('Error from protectedRoute middleware', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
