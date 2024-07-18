@@ -22,8 +22,6 @@ const getBikeOwnerIdFromToken = (req) => {
 const protectedRoute = async (req, res, next) => {
     try {
         const bikeOwnerId = getBikeOwnerIdFromToken(req);
-   
-
         req.bikeOwnerId = bikeOwnerId;  // Set the decoded bike owner ID from JWT
         next(); // Proceed to next middleware or route handler
     } catch (error) {
