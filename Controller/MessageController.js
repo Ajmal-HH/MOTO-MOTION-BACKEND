@@ -79,6 +79,7 @@ const getReceiverData = async (req,res) =>{
 const getReciverDataOwner = async (req,res) =>{
   try {
     const { receiverId } = req.params;
+    console.log(receiverId,"receiverid   111");
     const bikeOwnerId = req.bikeOwnerId
     console.log(bikeOwnerId,"bikeOwnerId");
     const senderId = bikeOwnerId
