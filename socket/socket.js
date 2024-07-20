@@ -9,7 +9,7 @@ let users = [];
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {  
-    origin: ["https://moto-motion-frontend.vercel.app","https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app"],
+    origin: ["https://moto-motion-frontend.vercel.app","https://motomotoion.vercel.app/"],
     methods: ["GET", "POST"],
   },
 });
