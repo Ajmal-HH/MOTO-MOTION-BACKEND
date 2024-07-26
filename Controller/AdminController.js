@@ -42,11 +42,6 @@ const adminAuth = asyncHandler(async (req, res) => {
 
             if (matchPassword) {
                 const admintoken = generateToken(adminData._id)
-                // res.cookie('jwt-admin', token, {
-                //     httpOnly: false,
-                //     secure: false,
-                //     sameSite: "strict",
-                // })
                 return res.status(200)
                     .json({ message: 'Login Successfully',admintoken })
             } else {

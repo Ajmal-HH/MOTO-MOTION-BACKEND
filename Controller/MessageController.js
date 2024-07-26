@@ -8,7 +8,6 @@ const sendMessage = async (req, res) => {
   try{    
         
     const { message , userId,senderId } = req.body;
-    console.log( message , userId,senderId,"send message data");
     const myId=senderId
       if (!message) {
       return res.status(400).json({ error: 'Message is required' });
@@ -67,9 +66,7 @@ const fetchChats = async (req, res) => {
 const getReceiverData = async (req,res) =>{
     try {
         const {receiverId} = req.query
-        console.log(receiverId,"receiverId");
         const receiverData =  await bikeOwner.findOne({_id : receiverId})
-        console.log(receiverData,"receiverData");
         res.json(receiverData)
     } catch (error) {
       console.log("Error in getReceiverData : ", error.message );  
@@ -80,10 +77,8 @@ const getReceiverData = async (req,res) =>{
 const getReciverDataOwner = async (req,res) =>{
   try {
     const { receiverId } = req.params;
-    console.log(receiverId,"receiverid   111");
     const bikeOwnerData = JSON.parse(req.body.bikeOwnerData);
     const senderId = bikeOwnerData._id
-    console.log(senderId,"senderId");
     const receiverData = await User.findOne({_id : receiverId})
     res.json({receiverData,senderId})
   } catch (error) {
