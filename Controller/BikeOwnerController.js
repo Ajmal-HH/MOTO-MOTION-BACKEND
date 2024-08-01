@@ -148,42 +148,47 @@ const addBike = asyncHandler(async (req, res) => {
             const bikeowner_id = ownerData._id
             //   const imagePaths = req.files.map(file => file.filename);
 
-         const images = req.files
-         const uploadedImages = [];
-         for (const image of images) {
-             const result = await cloudinary.uploader.upload(image.path, {
-                 folder: "MOTO MOTION"
-             });
-             uploadedImages.push(result.secure_url);
-         }
-
-        const existBike = await Bike.findOne({ bikeNO })
-        if (existBike) {
-            res.status(400)
-                .json({ message: 'This bike is already exist' })
-        } else {
-            const bike = new Bike({
-                bikeowner_id,
-                bike_name: bikeName,
-                bike_number: bikeNO,
-                bike_type: bikeType,
-                bike_cc: bikeCC,
-                location,
-                price: rent,
-                details,
-                address,
-                pinCode,            
-                image:uploadedImages
-            })
-            const bikeDetails = await bike.save()
-            if (bikeDetails) {
-                res.status(200)
-                    .json({ status: true })
-            } else {
-                res.status(400)
-                    .json({ message: 'Bike adding failed' })
+            const images = req.files.image || [];
+            const document = req.files.document.map(file => file.filename);
+    
+    
+            const uploadedImages = [];
+            for (const image of images) {
+                const result = await cloudinary.uploader.upload(image.path, {
+                    folder: "MOTO MOTION"
+                });
+                uploadedImages.push(result.secure_url);
             }
-        }
+    
+            const existBike = await Bike.findOne({ bikeNO })
+            if (existBike) {
+                res.status(400)
+                    .json({ message: 'This bike is already exist' })
+            } else {
+                const bike = new Bike({
+                    bikeowner_id,
+                    bike_name: bikeName,
+                    bike_number: bikeNO,
+                    bike_type: bikeType,
+                    bike_cc: bikeCC,
+                    location,
+                    price: rent,
+                    details,
+                    address,
+                    pinCode,
+                    image: uploadedImages,
+                    document
+                })
+                const bikeDetails = await bike.save()
+                console.log(bikeDetails,"bike details...");
+                if (bikeDetails) {
+                    res.status(200)
+                        .json({ status: true })
+                } else {
+                    res.status(400)
+                        .json({ message: 'Bike adding failed' })
+                }
+            }
     } catch (error) {
         console.log(error.message);
     }
