@@ -298,16 +298,11 @@ const logoutUser = asyncHandler(async (req, res) => {
     const {name,email} = req.body
     const userData = await User.findOne({email})
     if(userData){
-        req.session.userId = userData._id
+        
         if(!userData?.isBlocked ){
             const token = generateToken(userData._id);
-            res.cookie('jwt',token,{
-                httpOnly : false,
-                secure : false,
-                sameSite : "strict",
-            })
-               res.status(200)
-              .json({status : true})
+
+            return res.status(200).json({ status: true, token });
         }else{
             res.status(403)
             .json({message : 'User is blocked by admin'})
@@ -321,15 +316,9 @@ const logoutUser = asyncHandler(async (req, res) => {
         })
         const userDetails =  await user.save()
         if(userDetails){
-            req.session.userId = userDetails._id
-            const token = generateToken(userDetails._id);
-            res.cookie('jwt',token,{
-                httpOnly : false,
-                secure : false,
-                sameSite : "strict",
-            })
-            res.status(200)
-            .json({status : true})
+            const token = generateToken(userData._id);
+
+            return res.status(200).json({ status: true, token });
         }else{
             res.status(400)
             json({message:'Authentication failed'})
