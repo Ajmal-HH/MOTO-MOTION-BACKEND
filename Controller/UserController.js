@@ -296,9 +296,9 @@ const logoutUser = asyncHandler(async (req, res) => {
 
   const googleAuth =async (req,res)=>{
     const {name,email} = req.body
+    console.log(name,email);
     const userData = await User.findOne({email})
-    if(userData){
-        
+    if(userData){  
         if(!userData?.isBlocked ){
             const token = generateToken(userData._id);
 
@@ -316,7 +316,7 @@ const logoutUser = asyncHandler(async (req, res) => {
         })
         const userDetails =  await user.save()
         if(userDetails){
-            const token = generateToken(userData._id);
+            const token = generateToken(userDetails._id);
 
             return res.status(200).json({ status: true, token });
         }else{
