@@ -12,7 +12,11 @@ bikeowner_router.post('/bikeowner-signup',bikeOwnerSignup)
 bikeowner_router.post('/bikeowner-login',bikeOwnerLogin)
 bikeowner_router.post('/bikeowner-dashboard',bikeOwnerDashboard)
 bikeowner_router.get('/loadowner-details',loadOwnerDetails)
-bikeowner_router.post('/addbike',uploadprdt.array('image'),addBike)
+// bikeowner_router.post('/addbike',uploadprdt.array('image'),addBike)
+bikeowner_router.post('/addbike', uploadprdt.fields([
+    { name: 'image', maxCount: 10 },
+    { name: 'document', maxCount: 10 }
+  ]), addBike);
 bikeowner_router.post('/bike-list',bikeList)
 bikeowner_router.get('/deletebike',deleteBike)
 bikeowner_router.get('/bikeowner-loadbikeedit',loadOwnerEditBike)
