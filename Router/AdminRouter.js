@@ -1,5 +1,5 @@
 import express from 'express'
-import {  addNewUser, addbikeOwner, adminAuth, adminBikeList, adminBookingList, adminDashboard, adminEditOwer, adminEdituser, bikeOwnerList, blockOwner, blockUser, loadAdminEditUser, loadAdminOwnerEdit, logoutAdmin, unblockOwner, unblockUser, userDetails, userList, verifyDocument, verifyDocumentList } from '../Controller/AdminController.js'
+import {  addNewUser, addbikeOwner, adminAuth, adminBikeList, adminBookingList, adminDashboard, adminEditOwer, adminEdituser, bikeDetails, bikeOwnerList, blockOwner, blockUser, loadAdminEditUser, loadAdminOwnerEdit, logoutAdmin, unblockOwner, unblockUser, userDetails, userList, verifyBike, verifyBikeList, verifyDocument, verifyDocumentList } from '../Controller/AdminController.js'
 
 const admin_router = express.Router()
 
@@ -22,6 +22,9 @@ admin_router.get('/userdetails',userDetails)
 admin_router.get('/verify-document',verifyDocument)
 admin_router.get('/admin-bookinglist',adminBookingList)
 admin_router.get('/admin-bikelist',adminBikeList)
+admin_router.get('/verfiy-bike-list',verifyBikeList)
+admin_router.get('/bikedetails',bikeDetails)
+admin_router.get('/verify-bike',verifyBike)
 admin_router.get('/admin-logout',logoutAdmin)
 
 export default admin_router          

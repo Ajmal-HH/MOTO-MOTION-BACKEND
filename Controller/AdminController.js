@@ -416,6 +416,39 @@ const adminDashboard = async (req, res) => {
 }
 
 
+const verifyBikeList = async (req, res) => {
+    try {
+        const bikes = await Bikes.find({ verified : 'false' })
+        res.json(bikes)
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const verifyBike = async (req, res) => {
+    try {
+        const bikeId = req.query.bikeId
+        const bike = await Bikes.findByIdAndUpdate({ _id: bikeId }, {
+            $set: {
+                verified: 'true'
+            }
+        })
+        if (bike) {
+            res.json({ bike })
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+} 
+
+const bikeDetails = async (req, res) => {
+    const bikeId = req.query.bikeId   
+    const bike = await Bikes.findOne({ _id: bikeId })
+    res.json({ bike })
+}
+
+
+
 export {
     adminAuth,
     userList,
@@ -436,5 +469,10 @@ export {
     adminBookingList,
     adminBikeList,
     logoutAdmin,
-    adminDashboard
+    adminDashboard,
+    verifyBikeList,
+    verifyBike,
+    bikeDetails
+
+
 }

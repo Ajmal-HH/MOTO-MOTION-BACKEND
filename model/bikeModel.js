@@ -37,6 +37,10 @@ const bikeSchema = mongoose.Schema({
         type: Array,
         default: null
     },
+    verified : {
+        type: Boolean,
+        default: false
+    },
     is_deleted: {
         type: Boolean,
         default: false
@@ -44,6 +48,9 @@ const bikeSchema = mongoose.Schema({
     image: {
         type: Array,
         required: true
+    },
+    document: {
+        type: Array,
     },
     address: {
         type: String,
