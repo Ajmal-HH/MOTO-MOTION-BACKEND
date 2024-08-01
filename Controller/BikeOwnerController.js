@@ -140,6 +140,7 @@ const loadOwnerDetails = async (req, res) => {
 
 const addBike = asyncHandler(async (req, res) => {
     try {
+        
         const { bikeName, bikeNO, location,
             bikeCC, rent, bikeType, details, address, pinCode,bikeOwnerData } = req.body
 
