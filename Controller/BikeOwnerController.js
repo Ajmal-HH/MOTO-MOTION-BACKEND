@@ -328,7 +328,6 @@ const bikeOwnerDashboard = async (req, res) => {
     try {
         const ownerData = req.body.bikeOwnerData
         const id = ownerData._id
-        console.log(id,"id>>");
 
         const bookings = await Booking.find({ bikeOwner_id: id });
         const owner = await bikeOwner.findOne({ _id: id });

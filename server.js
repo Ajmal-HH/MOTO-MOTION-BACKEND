@@ -55,10 +55,11 @@ app.use('/api/messages', MessageRouter);
 
 app.use((err, req, res, next) => {
   console.error("Error in middleware", {
-    message : err.message,
-    stack : err.stack,
+    message: err.message,
+    stack: err.stack,
   });
-  res.static(500),json({message : 'internal server error'})
+  res.status(500).json({ message: 'internal server error' });
 });
+
 
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
