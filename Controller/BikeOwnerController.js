@@ -140,7 +140,7 @@ const loadOwnerDetails = async (req, res) => {
 
 const addBike = asyncHandler(async (req, res) => {
     try {
-        
+
         const { bikeName, bikeNO, location,
             bikeCC, rent, bikeType, details, address, pinCode,bikeOwnerData } = req.body
 
@@ -328,6 +328,7 @@ const bikeOwnerDashboard = async (req, res) => {
     try {
         const ownerData = req.body.bikeOwnerData
         const id = ownerData._id
+        console.log(id,"id>>");
 
         const bookings = await Booking.find({ bikeOwner_id: id });
         const owner = await bikeOwner.findOne({ _id: id });
