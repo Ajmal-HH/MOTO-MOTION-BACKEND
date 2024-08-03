@@ -38,11 +38,17 @@ app.use(session({
 }));
 
 // Middleware
+// app.use(cors({
+//   origin: ['https://moto-motion-frontend.vercel.app','https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'],
+//   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+//   credentials: true
+// }));
 app.use(cors({
-  origin: ['https://moto-motion-frontend.vercel.app','https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'],
+  origin: ['https://moto-motion-frontend.vercel.app', 'https://moto-motion-frontend-ozw2pv646-mohamed-ajmals-projects.vercel.app'],
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   credentials: true
 }));
+
 
 // User Routes
 app.use('/api/', userRouter);
