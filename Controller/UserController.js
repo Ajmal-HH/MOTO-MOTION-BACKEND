@@ -300,7 +300,6 @@ const logoutUser = asyncHandler(async (req, res) => {
     if(userData){  
         if(!userData?.isBlocked ){
             const token = generateToken(userData._id);
-            console.log(token,"token11111");
             return res.status(200).json({ status: true, token });
         }else{
             res.status(403)
@@ -316,7 +315,6 @@ const logoutUser = asyncHandler(async (req, res) => {
         const userDetails =  await user.save()
         if(userDetails){
             const token = generateToken(userDetails._id);
-            console.log(token,"token2222");
 
             return res.status(200).json({ status: true, token });
         }else{
