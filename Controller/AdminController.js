@@ -296,7 +296,7 @@ const adminBookingList = async (req, res) => {
 
 const adminBikeList = async (req, res) => {
     try {
-        const bikeList = await Bikes.find()
+        const bikeList = await Bikes.find({ verified : true })
         res.json(bikeList)
     } catch (error) {
         console.log(error.message);
